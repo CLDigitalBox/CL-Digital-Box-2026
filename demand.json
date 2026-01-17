@@ -1,0 +1,413 @@
+{
+  "id": "102019b1a16e5b67ac0b848b817eebda904",
+  "version": "102019b1a16e5b6794cbdef3f5cd2b06498",
+  "schema": {
+    "name": "demand",
+    "description": "Represents a legal or administrative demand/case associated with a client.",
+    "fields": [
+      {
+        "name": "id",
+        "description": "Unique identifier for each data of this entity.",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 1,
+          "reason": "Primary Key"
+        }
+      },
+      {
+        "name": "data_creator",
+        "description": "id of the user who creates the record",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Audit"
+        }
+      },
+      {
+        "name": "data_updater",
+        "description": "id of the user who updates the record",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Audit"
+        }
+      },
+      {
+        "name": "create_time",
+        "description": "create time in timestamp unix",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 1,
+          "reason": "System Metadata"
+        },
+        "format": "timestamp"
+      },
+      {
+        "name": "update_time",
+        "description": "update time in timestamp unix",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 1,
+          "reason": "System Metadata"
+        },
+        "format": "timestamp"
+      },
+      {
+        "name": "client_id",
+        "description": "Reference to the client associated with the demand.",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Foreign Key"
+        }
+      },
+      {
+        "name": "demand_number",
+        "description": "Internal or external number identifying the demand.",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Business Identifier"
+        },
+        "nullable": true
+      },
+      {
+        "name": "demand_type",
+        "description": "Type of the demand.",
+        "type": 100,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Classification"
+        },
+        "enumeration": [
+          {
+            "value": "Unspecified"
+          },
+          {
+            "number": 1,
+            "value": "Civil"
+          },
+          {
+            "number": 2,
+            "value": "Criminal"
+          },
+          {
+            "number": 3,
+            "value": "Labor"
+          },
+          {
+            "number": 4,
+            "value": "Tax"
+          },
+          {
+            "number": 5,
+            "value": "Administrative"
+          },
+          {
+            "number": 6,
+            "value": "SocialSecurity"
+          },
+          {
+            "number": 7,
+            "value": "Other"
+          }
+        ]
+      },
+      {
+        "name": "status",
+        "description": "Current status of the demand.",
+        "type": 100,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Status"
+        },
+        "enumeration": [
+          {
+            "value": "Unspecified"
+          },
+          {
+            "number": 1,
+            "value": "New"
+          },
+          {
+            "number": 2,
+            "value": "InProgress"
+          },
+          {
+            "number": 3,
+            "value": "Waiting"
+          },
+          {
+            "number": 4,
+            "value": "Suspended"
+          },
+          {
+            "number": 5,
+            "value": "Concluded"
+          },
+          {
+            "number": 6,
+            "value": "Archived"
+          }
+        ]
+      },
+      {
+        "name": "priority",
+        "description": "Priority level of the demand.",
+        "type": 100,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "SLA"
+        },
+        "enumeration": [
+          {
+            "value": "Unspecified"
+          },
+          {
+            "number": 1,
+            "value": "Low"
+          },
+          {
+            "number": 2,
+            "value": "Medium"
+          },
+          {
+            "number": 3,
+            "value": "High"
+          },
+          {
+            "number": 4,
+            "value": "Critical"
+          }
+        ]
+      },
+      {
+        "name": "description",
+        "description": "Detailed description of the demand.",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 3,
+          "reason": "Content"
+        },
+        "nullable": true
+      },
+      {
+        "name": "dates",
+        "description": "Significant dates related to the demand lifecycle.",
+        "type": 102,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Timeline"
+        },
+        "nullable": true,
+        "inner": [
+          {
+            "name": "registration_date",
+            "description": "Date the demand was registered.",
+            "type": 1,
+            "compliance": {
+              "confidentiality": 2,
+              "reason": "Timeline"
+            },
+            "nullable": true,
+            "format": "timestamp"
+          },
+          {
+            "name": "start_date",
+            "description": "Date work started on the demand.",
+            "type": 1,
+            "compliance": {
+              "confidentiality": 2,
+              "reason": "Timeline"
+            },
+            "nullable": true,
+            "format": "timestamp"
+          },
+          {
+            "name": "deadline",
+            "description": "Deadline for the demand.",
+            "type": 1,
+            "compliance": {
+              "confidentiality": 2,
+              "reason": "Timeline"
+            },
+            "nullable": true,
+            "format": "timestamp"
+          },
+          {
+            "name": "conclusion_date",
+            "description": "Date the demand was concluded.",
+            "type": 1,
+            "compliance": {
+              "confidentiality": 2,
+              "reason": "Timeline"
+            },
+            "nullable": true,
+            "format": "timestamp"
+          }
+        ]
+      },
+      {
+        "name": "protocol_info",
+        "description": "External protocol information.",
+        "type": 102,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Reference"
+        },
+        "nullable": true,
+        "inner": [
+          {
+            "name": "protocol_number",
+            "description": "External protocol number.",
+            "type": 1,
+            "compliance": {
+              "confidentiality": 2,
+              "reason": "Reference"
+            },
+            "nullable": true
+          },
+          {
+            "name": "protocol_date",
+            "description": "Date of the protocol.",
+            "type": 1,
+            "compliance": {
+              "confidentiality": 2,
+              "reason": "Reference"
+            },
+            "nullable": true,
+            "format": "timestamp"
+          },
+          {
+            "name": "protocol_organ",
+            "description": "Organization where the protocol was filed.",
+            "type": 1,
+            "compliance": {
+              "confidentiality": 2,
+              "reason": "Reference"
+            },
+            "nullable": true
+          }
+        ]
+      },
+      {
+        "name": "values",
+        "description": "Financial values associated with the demand.",
+        "type": 102,
+        "compliance": {
+          "confidentiality": 3,
+          "reason": "Financial"
+        },
+        "nullable": true,
+        "inner": [
+          {
+            "name": "contract_value",
+            "description": "Total value of the contract.",
+            "type": 2,
+            "compliance": {
+              "confidentiality": 3,
+              "reason": "Financial"
+            },
+            "nullable": true,
+            "numeric": "float"
+          },
+          {
+            "name": "paid_value",
+            "description": "Amount already paid.",
+            "type": 2,
+            "compliance": {
+              "confidentiality": 3,
+              "reason": "Financial"
+            },
+            "nullable": true,
+            "numeric": "float"
+          },
+          {
+            "name": "balance_value",
+            "description": "Remaining balance.",
+            "type": 2,
+            "compliance": {
+              "confidentiality": 3,
+              "reason": "Financial"
+            },
+            "nullable": true,
+            "numeric": "float"
+          }
+        ]
+      }
+    ],
+    "indexes": [
+      {
+        "fields": [
+          "id"
+        ],
+        "unique": true,
+        "primary": true,
+        "order": false
+      },
+      {
+        "fields": [
+          "client_id"
+        ],
+        "order": false
+      },
+      {
+        "fields": [
+          "demand_number"
+        ],
+        "order": false
+      },
+      {
+        "fields": [
+          "status"
+        ],
+        "order": false
+      },
+      {
+        "fields": [
+          "demand_type"
+        ],
+        "order": false
+      },
+      {
+        "fields": [
+          "data_creator"
+        ],
+        "order": false
+      },
+      {
+        "fields": [
+          "data_updater"
+        ],
+        "order": false
+      }
+    ],
+    "relations": [
+      {
+        "referencing_fields": [
+          "client_id"
+        ],
+        "referenced_entity": {
+          "name": "client"
+        },
+        "referenced_fields": [
+          "id"
+        ],
+        "cascade": true
+      }
+    ]
+  },
+  "task": {
+    "id": "693df864ca7fe74256af1341",
+    "root": "693c2aa501d82a4f259f4ab4",
+    "project": "693c2aa501d82a4f259f4ab3",
+    "user": "48d1f350-6001-709d-e3d6-b657be67d202"
+  },
+  "namespace": {
+    "id": "01987547fc6c72ecb453bd2736bd4ea0",
+    "tenant": 2,
+    "name": "global-1",
+    "default": true
+  },
+  "revision": 1
+}

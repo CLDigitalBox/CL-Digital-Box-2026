@@ -1,0 +1,338 @@
+{
+  "id": "102019b18d38c017992b864bb619aae7bca",
+  "version": "102019b18d38c01761b964c8ef345e21973",
+  "schema": {
+    "name": "task",
+    "description": "Represents a task assigned to a user, associated with a client and optionally a demand.",
+    "fields": [
+      {
+        "name": "id",
+        "description": "Unique identifier for each data of this entity.",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 1,
+          "reason": "Primary Key"
+        }
+      },
+      {
+        "name": "data_creator",
+        "description": "id of the user who creates the record",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Audit"
+        }
+      },
+      {
+        "name": "data_updater",
+        "description": "id of the user who updates the record",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Audit"
+        }
+      },
+      {
+        "name": "create_time",
+        "description": "create time in timestamp unix",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 1,
+          "reason": "System Metadata"
+        },
+        "format": "timestamp"
+      },
+      {
+        "name": "update_time",
+        "description": "update time in timestamp unix",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 1,
+          "reason": "System Metadata"
+        },
+        "format": "timestamp"
+      },
+      {
+        "name": "client_id",
+        "description": "Foreign key referencing the client.",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Relationship"
+        }
+      },
+      {
+        "name": "demand_id",
+        "description": "Foreign key referencing the demand, if applicable.",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Relationship"
+        },
+        "nullable": true
+      },
+      {
+        "name": "task_type",
+        "description": "Type or category of the task.",
+        "type": 100,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Classification"
+        },
+        "enumeration": [
+          {
+            "value": "Unspecified"
+          },
+          {
+            "number": 1,
+            "value": "DocumentReview"
+          },
+          {
+            "number": 2,
+            "value": "Drafting"
+          },
+          {
+            "number": 3,
+            "value": "Filing"
+          },
+          {
+            "number": 4,
+            "value": "Research"
+          },
+          {
+            "number": 5,
+            "value": "Meeting"
+          },
+          {
+            "number": 6,
+            "value": "FollowUp"
+          },
+          {
+            "number": 7,
+            "value": "Administrative"
+          }
+        ]
+      },
+      {
+        "name": "title",
+        "description": "Title or summary of the task.",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Content"
+        }
+      },
+      {
+        "name": "description",
+        "description": "Detailed description of the task requirements.",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Content"
+        },
+        "nullable": true
+      },
+      {
+        "name": "priority",
+        "description": "Priority level of the task.",
+        "type": 100,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Workflow"
+        },
+        "enumeration": [
+          {
+            "value": "Unspecified"
+          },
+          {
+            "number": 1,
+            "value": "Low"
+          },
+          {
+            "number": 2,
+            "value": "Normal"
+          },
+          {
+            "number": 3,
+            "value": "High"
+          },
+          {
+            "number": 4,
+            "value": "Urgent"
+          }
+        ]
+      },
+      {
+        "name": "status",
+        "description": "Current status of the task.",
+        "type": 100,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Workflow Status"
+        },
+        "enumeration": [
+          {
+            "value": "Unspecified"
+          },
+          {
+            "number": 1,
+            "value": "Pending"
+          },
+          {
+            "number": 2,
+            "value": "InProgress"
+          },
+          {
+            "number": 3,
+            "value": "Completed"
+          },
+          {
+            "number": 4,
+            "value": "OnHold"
+          },
+          {
+            "number": 5,
+            "value": "Cancelled"
+          }
+        ]
+      },
+      {
+        "name": "assigned_to",
+        "description": "ID or name of the user assigned to the task.",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Assignment"
+        }
+      },
+      {
+        "name": "due_date",
+        "description": "Deadline for the task.",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Schedule"
+        },
+        "format": "timestamp"
+      },
+      {
+        "name": "completion_date",
+        "description": "Date when the task was completed.",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Schedule"
+        },
+        "nullable": true,
+        "format": "timestamp"
+      },
+      {
+        "name": "notes",
+        "description": "Internal notes regarding the task progress.",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Internal"
+        },
+        "nullable": true
+      }
+    ],
+    "indexes": [
+      {
+        "fields": [
+          "id"
+        ],
+        "unique": true,
+        "primary": true,
+        "order": false
+      },
+      {
+        "fields": [
+          "client_id"
+        ],
+        "order": false
+      },
+      {
+        "fields": [
+          "demand_id"
+        ],
+        "order": false
+      },
+      {
+        "fields": [
+          "assigned_to"
+        ],
+        "order": false
+      },
+      {
+        "fields": [
+          "status"
+        ],
+        "order": false
+      },
+      {
+        "fields": [
+          "due_date"
+        ],
+        "order": true
+      },
+      {
+        "fields": [
+          "priority"
+        ],
+        "order": false
+      },
+      {
+        "fields": [
+          "data_creator"
+        ],
+        "order": false
+      },
+      {
+        "fields": [
+          "data_updater"
+        ],
+        "order": false
+      }
+    ],
+    "relations": [
+      {
+        "referencing_fields": [
+          "client_id"
+        ],
+        "referenced_entity": {
+          "name": "client"
+        },
+        "referenced_fields": [
+          "id"
+        ],
+        "cascade": true
+      },
+      {
+        "referencing_fields": [
+          "demand_id"
+        ],
+        "referenced_entity": {
+          "name": "demand"
+        },
+        "referenced_fields": [
+          "id"
+        ],
+        "cascade": true
+      }
+    ]
+  },
+  "task": {
+    "id": "693da3b5f4f812933c645a88",
+    "root": "693c2aa501d82a4f259f4ab4",
+    "project": "693c2aa501d82a4f259f4ab3",
+    "user": "48d1f350-6001-709d-e3d6-b657be67d202"
+  },
+  "namespace": {
+    "id": "01987547fc6c72ecb453bd2736bd4ea0",
+    "tenant": 2,
+    "name": "global-1",
+    "default": true
+  },
+  "revision": 1
+}

@@ -1,0 +1,356 @@
+{
+  "id": "102019b1a16e5b67a1ba899f1ce58b4f08b",
+  "version": "102019b1a16e5b6794cbdef3f5cd2b06498",
+  "schema": {
+    "name": "client",
+    "description": "Represents a client in the CL Digital Box system, including personal and contact details.",
+    "fields": [
+      {
+        "name": "id",
+        "description": "Unique identifier for each data of this entity.",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 1,
+          "reason": "Primary Key"
+        }
+      },
+      {
+        "name": "data_creator",
+        "description": "id of the user who creates the record",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Audit"
+        }
+      },
+      {
+        "name": "data_updater",
+        "description": "id of the user who updates the record",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Audit"
+        }
+      },
+      {
+        "name": "create_time",
+        "description": "create time in timestamp unix",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 1,
+          "reason": "System Metadata"
+        },
+        "format": "timestamp"
+      },
+      {
+        "name": "update_time",
+        "description": "update time in timestamp unix",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 1,
+          "reason": "System Metadata"
+        },
+        "format": "timestamp"
+      },
+      {
+        "name": "full_name",
+        "description": "Full name of the client.",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 3,
+          "reason": "PII"
+        },
+        "taxonomy": {
+          "category": "Person",
+          "subject": "Name"
+        }
+      },
+      {
+        "name": "cpf_cnpj",
+        "description": "Tax identification number (CPF or CNPJ).",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 4,
+          "reason": "High Risk PII"
+        },
+        "taxonomy": {
+          "category": "Person",
+          "subject": "TaxID"
+        }
+      },
+      {
+        "name": "birth_date",
+        "description": "Birth date of the client.",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 3,
+          "reason": "PII"
+        },
+        "taxonomy": {
+          "category": "Person",
+          "subject": "Demographic"
+        },
+        "nullable": true
+      },
+      {
+        "name": "client_segment",
+        "description": "Segment classification of the client.",
+        "type": 100,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Business Classification"
+        },
+        "enumeration": [
+          {
+            "value": "Unspecified"
+          },
+          {
+            "number": 1,
+            "value": "Individual"
+          },
+          {
+            "number": 2,
+            "value": "Corporate"
+          },
+          {
+            "number": 3,
+            "value": "Government"
+          },
+          {
+            "number": 4,
+            "value": "NonProfit"
+          }
+        ]
+      },
+      {
+        "name": "status",
+        "description": "Current status of the client account.",
+        "type": 100,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Business Status"
+        },
+        "enumeration": [
+          {
+            "value": "Unspecified"
+          },
+          {
+            "number": 1,
+            "value": "Active"
+          },
+          {
+            "number": 2,
+            "value": "Inactive"
+          },
+          {
+            "number": 3,
+            "value": "Blocked"
+          },
+          {
+            "number": 4,
+            "value": "Pending"
+          }
+        ]
+      },
+      {
+        "name": "contact_info",
+        "description": "Contact details for the client.",
+        "type": 102,
+        "compliance": {
+          "confidentiality": 3,
+          "reason": "Contact Information"
+        },
+        "nullable": true,
+        "inner": [
+          {
+            "name": "email",
+            "description": "Email address.",
+            "type": 1,
+            "compliance": {
+              "confidentiality": 3,
+              "reason": "PII"
+            },
+            "nullable": true,
+            "format": "email"
+          },
+          {
+            "name": "phone_primary",
+            "description": "Primary phone number.",
+            "type": 1,
+            "compliance": {
+              "confidentiality": 3,
+              "reason": "PII"
+            },
+            "nullable": true
+          },
+          {
+            "name": "phone_secondary",
+            "description": "Secondary phone number.",
+            "type": 1,
+            "compliance": {
+              "confidentiality": 3,
+              "reason": "PII"
+            },
+            "nullable": true
+          },
+          {
+            "name": "preferred_channel",
+            "description": "Preferred communication channel.",
+            "type": 1,
+            "compliance": {
+              "confidentiality": 2,
+              "reason": "Preference"
+            },
+            "nullable": true
+          }
+        ]
+      },
+      {
+        "name": "address_info",
+        "description": "Physical address of the client.",
+        "type": 102,
+        "compliance": {
+          "confidentiality": 3,
+          "reason": "PII"
+        },
+        "nullable": true,
+        "inner": [
+          {
+            "name": "street",
+            "description": "Street name.",
+            "type": 1,
+            "compliance": {
+              "confidentiality": 3,
+              "reason": "Address"
+            },
+            "nullable": true
+          },
+          {
+            "name": "number",
+            "description": "Property number.",
+            "type": 1,
+            "compliance": {
+              "confidentiality": 3,
+              "reason": "Address"
+            },
+            "nullable": true
+          },
+          {
+            "name": "complement",
+            "description": "Address complement (apt, suite, etc.).",
+            "type": 1,
+            "compliance": {
+              "confidentiality": 3,
+              "reason": "Address"
+            },
+            "nullable": true
+          },
+          {
+            "name": "neighborhood",
+            "description": "Neighborhood or district.",
+            "type": 1,
+            "compliance": {
+              "confidentiality": 3,
+              "reason": "Address"
+            },
+            "nullable": true
+          },
+          {
+            "name": "city",
+            "description": "City name.",
+            "type": 1,
+            "compliance": {
+              "confidentiality": 3,
+              "reason": "Address"
+            },
+            "nullable": true
+          },
+          {
+            "name": "state",
+            "description": "State or province code.",
+            "type": 1,
+            "compliance": {
+              "confidentiality": 3,
+              "reason": "Address"
+            },
+            "nullable": true
+          },
+          {
+            "name": "zip_code",
+            "description": "Postal code.",
+            "type": 1,
+            "compliance": {
+              "confidentiality": 3,
+              "reason": "Address"
+            },
+            "nullable": true
+          },
+          {
+            "name": "country",
+            "description": "Country name.",
+            "type": 1,
+            "compliance": {
+              "confidentiality": 3,
+              "reason": "Address"
+            },
+            "nullable": true
+          }
+        ]
+      }
+    ],
+    "indexes": [
+      {
+        "fields": [
+          "id"
+        ],
+        "unique": true,
+        "primary": true,
+        "order": false
+      },
+      {
+        "fields": [
+          "cpf_cnpj"
+        ],
+        "unique": true,
+        "order": false
+      },
+      {
+        "fields": [
+          "status"
+        ],
+        "order": false
+      },
+      {
+        "fields": [
+          "client_segment"
+        ],
+        "order": false
+      },
+      {
+        "fields": [
+          "data_creator"
+        ],
+        "order": false
+      },
+      {
+        "fields": [
+          "data_updater"
+        ],
+        "order": false
+      }
+    ]
+  },
+  "task": {
+    "id": "693df864ca7fe74256af1341",
+    "root": "693c2aa501d82a4f259f4ab4",
+    "project": "693c2aa501d82a4f259f4ab3",
+    "user": "48d1f350-6001-709d-e3d6-b657be67d202"
+  },
+  "namespace": {
+    "id": "01987547fc6c72ecb453bd2736bd4ea0",
+    "tenant": 2,
+    "name": "global-1",
+    "default": true
+  },
+  "revision": 1
+}

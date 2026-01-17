@@ -1,0 +1,262 @@
+{
+  "id": "102019b1a16e5b67ccf85ba6d2c651a1cbc",
+  "version": "102019b1a16e5b6794cbdef3f5cd2b06498",
+  "schema": {
+    "name": "notification",
+    "description": "Represents notifications sent to clients via various channels.",
+    "fields": [
+      {
+        "name": "id",
+        "description": "Unique identifier for each data of this entity.",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 1,
+          "reason": "Primary Key"
+        }
+      },
+      {
+        "name": "data_creator",
+        "description": "id of the user who creates the record",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Audit"
+        }
+      },
+      {
+        "name": "data_updater",
+        "description": "id of the user who updates the record",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Audit"
+        }
+      },
+      {
+        "name": "create_time",
+        "description": "create time in timestamp unix",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 1,
+          "reason": "System Metadata"
+        },
+        "format": "timestamp"
+      },
+      {
+        "name": "update_time",
+        "description": "update time in timestamp unix",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 1,
+          "reason": "System Metadata"
+        },
+        "format": "timestamp"
+      },
+      {
+        "name": "client_id",
+        "description": "Reference to the client receiving the notification.",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Foreign Key"
+        }
+      },
+      {
+        "name": "demand_id",
+        "description": "Reference to the demand related to the notification, if applicable.",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Foreign Key"
+        },
+        "nullable": true
+      },
+      {
+        "name": "type",
+        "description": "Type/Channel of the notification.",
+        "type": 100,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Classification"
+        },
+        "enumeration": [
+          {
+            "value": "Unspecified"
+          },
+          {
+            "number": 1,
+            "value": "Email"
+          },
+          {
+            "number": 2,
+            "value": "WhatsApp"
+          }
+        ]
+      },
+      {
+        "name": "subject",
+        "description": "Subject of the notification.",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 3,
+          "reason": "Content"
+        }
+      },
+      {
+        "name": "message",
+        "description": "Body content of the notification.",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 3,
+          "reason": "Content"
+        }
+      },
+      {
+        "name": "status",
+        "description": "Delivery status of the notification.",
+        "type": 100,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Status"
+        },
+        "enumeration": [
+          {
+            "value": "Unspecified"
+          },
+          {
+            "number": 1,
+            "value": "Pending"
+          },
+          {
+            "number": 2,
+            "value": "Sent"
+          },
+          {
+            "number": 3,
+            "value": "Failed"
+          },
+          {
+            "number": 4,
+            "value": "Delivered"
+          }
+        ]
+      },
+      {
+        "name": "sent_at",
+        "description": "Timestamp when the notification was sent.",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Timeline"
+        },
+        "nullable": true,
+        "format": "timestamp"
+      },
+      {
+        "name": "delivered_at",
+        "description": "Timestamp when the notification was delivered.",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Timeline"
+        },
+        "nullable": true,
+        "format": "timestamp"
+      },
+      {
+        "name": "error_message",
+        "description": "Error message if the notification failed.",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "System Log"
+        },
+        "nullable": true
+      }
+    ],
+    "indexes": [
+      {
+        "fields": [
+          "id"
+        ],
+        "unique": true,
+        "primary": true,
+        "order": false
+      },
+      {
+        "fields": [
+          "client_id"
+        ],
+        "order": false
+      },
+      {
+        "fields": [
+          "demand_id"
+        ],
+        "order": false
+      },
+      {
+        "fields": [
+          "status"
+        ],
+        "order": false
+      },
+      {
+        "fields": [
+          "type"
+        ],
+        "order": false
+      },
+      {
+        "fields": [
+          "data_creator"
+        ],
+        "order": false
+      },
+      {
+        "fields": [
+          "data_updater"
+        ],
+        "order": false
+      }
+    ],
+    "relations": [
+      {
+        "referencing_fields": [
+          "client_id"
+        ],
+        "referenced_entity": {
+          "name": "client"
+        },
+        "referenced_fields": [
+          "id"
+        ],
+        "cascade": true
+      },
+      {
+        "referencing_fields": [
+          "demand_id"
+        ],
+        "referenced_entity": {
+          "name": "demand"
+        },
+        "referenced_fields": [
+          "id"
+        ]
+      }
+    ]
+  },
+  "task": {
+    "id": "693df864ca7fe74256af1341",
+    "root": "693c2aa501d82a4f259f4ab4",
+    "project": "693c2aa501d82a4f259f4ab3",
+    "user": "48d1f350-6001-709d-e3d6-b657be67d202"
+  },
+  "namespace": {
+    "id": "01987547fc6c72ecb453bd2736bd4ea0",
+    "tenant": 2,
+    "name": "global-1",
+    "default": true
+  },
+  "revision": 1
+}

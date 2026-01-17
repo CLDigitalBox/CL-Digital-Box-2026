@@ -1,0 +1,326 @@
+{
+  "id": "102019b18d19d3b794fa3a0ffd9c087d679",
+  "version": "102019b18d19d3b75f8bb15846cff9bfbfd",
+  "schema": {
+    "name": "vehicle",
+    "description": "Represents a vehicle associated with a client and optionally a demand.",
+    "fields": [
+      {
+        "name": "id",
+        "description": "Unique identifier for each data of this entity.",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 1,
+          "reason": "Primary Key"
+        }
+      },
+      {
+        "name": "data_creator",
+        "description": "id of the user who creates the record",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Audit"
+        }
+      },
+      {
+        "name": "data_updater",
+        "description": "id of the user who updates the record",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Audit"
+        }
+      },
+      {
+        "name": "create_time",
+        "description": "create time in timestamp unix",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 1,
+          "reason": "System Metadata"
+        },
+        "format": "timestamp"
+      },
+      {
+        "name": "update_time",
+        "description": "update time in timestamp unix",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 1,
+          "reason": "System Metadata"
+        },
+        "format": "timestamp"
+      },
+      {
+        "name": "client_id",
+        "description": "Foreign key referencing the client owning the vehicle.",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Relationship"
+        }
+      },
+      {
+        "name": "demand_id",
+        "description": "Foreign key referencing the demand involving the vehicle, if applicable.",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Relationship"
+        },
+        "nullable": true
+      },
+      {
+        "name": "license_plate",
+        "description": "Vehicle license plate, encrypted.",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 3,
+          "reason": "PII"
+        },
+        "encryption": true
+      },
+      {
+        "name": "renavam",
+        "description": "Renavam code, encrypted.",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 3,
+          "reason": "PII"
+        },
+        "encryption": true
+      },
+      {
+        "name": "chassis",
+        "description": "Chassis number, encrypted.",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 3,
+          "reason": "PII"
+        },
+        "encryption": true
+      },
+      {
+        "name": "brand",
+        "description": "Brand of the vehicle.",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Vehicle Info"
+        }
+      },
+      {
+        "name": "model",
+        "description": "Model of the vehicle.",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Vehicle Info"
+        }
+      },
+      {
+        "name": "year",
+        "description": "Year of manufacture.",
+        "type": 2,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Vehicle Info"
+        },
+        "numeric": "int"
+      },
+      {
+        "name": "color",
+        "description": "Color of the vehicle.",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Vehicle Info"
+        }
+      },
+      {
+        "name": "value",
+        "description": "Estimated value of the vehicle.",
+        "type": 2,
+        "compliance": {
+          "confidentiality": 3,
+          "reason": "Financial Info"
+        },
+        "numeric": "float"
+      },
+      {
+        "name": "vehicle_type",
+        "description": "Type of the vehicle.",
+        "type": 100,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Classification"
+        },
+        "enumeration": [
+          {
+            "value": "Unspecified"
+          },
+          {
+            "number": 1,
+            "value": "Car"
+          },
+          {
+            "number": 2,
+            "value": "Motorcycle"
+          },
+          {
+            "number": 3,
+            "value": "Truck"
+          },
+          {
+            "number": 4,
+            "value": "Bus"
+          },
+          {
+            "number": 5,
+            "value": "Van"
+          },
+          {
+            "number": 6,
+            "value": "Utility"
+          },
+          {
+            "number": 7,
+            "value": "Other"
+          }
+        ]
+      },
+      {
+        "name": "fuel_type",
+        "description": "Type of fuel used by the vehicle.",
+        "type": 100,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Technical Info"
+        },
+        "enumeration": [
+          {
+            "value": "Unspecified"
+          },
+          {
+            "number": 1,
+            "value": "Gasoline"
+          },
+          {
+            "number": 2,
+            "value": "Ethanol"
+          },
+          {
+            "number": 3,
+            "value": "Diesel"
+          },
+          {
+            "number": 4,
+            "value": "Flex"
+          },
+          {
+            "number": 5,
+            "value": "Electric"
+          },
+          {
+            "number": 6,
+            "value": "Hybrid"
+          },
+          {
+            "number": 7,
+            "value": "Other"
+          }
+        ]
+      },
+      {
+        "name": "notes",
+        "description": "Additional notes about the vehicle.",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Internal"
+        },
+        "nullable": true
+      }
+    ],
+    "indexes": [
+      {
+        "fields": [
+          "id"
+        ],
+        "unique": true,
+        "primary": true,
+        "order": false
+      },
+      {
+        "fields": [
+          "client_id"
+        ],
+        "order": false
+      },
+      {
+        "fields": [
+          "demand_id"
+        ],
+        "order": false
+      },
+      {
+        "fields": [
+          "license_plate"
+        ],
+        "order": false
+      },
+      {
+        "fields": [
+          "data_creator"
+        ],
+        "order": false
+      },
+      {
+        "fields": [
+          "data_updater"
+        ],
+        "order": false
+      }
+    ],
+    "relations": [
+      {
+        "referencing_fields": [
+          "client_id"
+        ],
+        "referenced_entity": {
+          "name": "client"
+        },
+        "referenced_fields": [
+          "id"
+        ],
+        "cascade": true
+      },
+      {
+        "referencing_fields": [
+          "demand_id"
+        ],
+        "referenced_entity": {
+          "name": "demand"
+        },
+        "referenced_fields": [
+          "id"
+        ],
+        "cascade": true
+      }
+    ]
+  },
+  "task": {
+    "id": "693da3b5f4f812933c645a88",
+    "root": "693c2aa501d82a4f259f4ab4",
+    "project": "693c2aa501d82a4f259f4ab3",
+    "user": "48d1f350-6001-709d-e3d6-b657be67d202"
+  },
+  "namespace": {
+    "id": "01987547fc6c72ecb453bd2736bd4ea0",
+    "tenant": 2,
+    "name": "global-1",
+    "default": true
+  },
+  "revision": 1
+}

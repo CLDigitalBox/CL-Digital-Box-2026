@@ -1,0 +1,277 @@
+{
+  "id": "102019b18d38c0178e1b78d8908135d1bb0",
+  "version": "102019b18d38c01761b964c8ef345e21973",
+  "schema": {
+    "name": "interaction",
+    "description": "Represents an interaction with a client, such as a call, meeting, or email.",
+    "fields": [
+      {
+        "name": "id",
+        "description": "Unique identifier for each data of this entity.",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 1,
+          "reason": "Primary Key"
+        }
+      },
+      {
+        "name": "data_creator",
+        "description": "id of the user who creates the record",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Audit"
+        }
+      },
+      {
+        "name": "data_updater",
+        "description": "id of the user who updates the record",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Audit"
+        }
+      },
+      {
+        "name": "create_time",
+        "description": "create time in timestamp unix",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 1,
+          "reason": "System Metadata"
+        },
+        "format": "timestamp"
+      },
+      {
+        "name": "update_time",
+        "description": "update time in timestamp unix",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 1,
+          "reason": "System Metadata"
+        },
+        "format": "timestamp"
+      },
+      {
+        "name": "client_id",
+        "description": "Foreign key referencing the client.",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Relationship"
+        }
+      },
+      {
+        "name": "demand_id",
+        "description": "Foreign key referencing the demand, if applicable.",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Relationship"
+        },
+        "nullable": true
+      },
+      {
+        "name": "interaction_type",
+        "description": "Type of the interaction (e.g., call, email, meeting).",
+        "type": 100,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Classification"
+        },
+        "enumeration": [
+          {
+            "value": "Unspecified"
+          },
+          {
+            "number": 1,
+            "value": "Call"
+          },
+          {
+            "number": 2,
+            "value": "Email"
+          },
+          {
+            "number": 3,
+            "value": "Meeting"
+          },
+          {
+            "number": 4,
+            "value": "Message"
+          },
+          {
+            "number": 5,
+            "value": "WhatsApp"
+          },
+          {
+            "number": 6,
+            "value": "Other"
+          }
+        ]
+      },
+      {
+        "name": "interaction_date",
+        "description": "Date and time when the interaction occurred.",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Schedule"
+        },
+        "format": "timestamp"
+      },
+      {
+        "name": "duration_minutes",
+        "description": "Duration of the interaction in minutes.",
+        "type": 2,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Metrics"
+        },
+        "numeric": "int"
+      },
+      {
+        "name": "subject",
+        "description": "Subject or title of the interaction.",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Content"
+        }
+      },
+      {
+        "name": "description",
+        "description": "Detailed description of what was discussed.",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Content"
+        },
+        "nullable": true
+      },
+      {
+        "name": "attendant",
+        "description": "Name or ID of the person who handled the interaction.",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Audit"
+        }
+      },
+      {
+        "name": "follow_up_required",
+        "description": "Whether a follow-up is required.",
+        "type": 3,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Status"
+        }
+      },
+      {
+        "name": "follow_up_date",
+        "description": "Date for the follow-up, if required.",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Schedule"
+        },
+        "nullable": true,
+        "format": "timestamp"
+      },
+      {
+        "name": "notes",
+        "description": "Additional internal notes.",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Internal"
+        },
+        "nullable": true
+      }
+    ],
+    "indexes": [
+      {
+        "fields": [
+          "id"
+        ],
+        "unique": true,
+        "primary": true,
+        "order": false
+      },
+      {
+        "fields": [
+          "client_id"
+        ],
+        "order": false
+      },
+      {
+        "fields": [
+          "demand_id"
+        ],
+        "order": false
+      },
+      {
+        "fields": [
+          "interaction_date"
+        ],
+        "order": true
+      },
+      {
+        "fields": [
+          "attendant"
+        ],
+        "order": false
+      },
+      {
+        "fields": [
+          "data_creator"
+        ],
+        "order": false
+      },
+      {
+        "fields": [
+          "data_updater"
+        ],
+        "order": false
+      }
+    ],
+    "relations": [
+      {
+        "referencing_fields": [
+          "client_id"
+        ],
+        "referenced_entity": {
+          "name": "client"
+        },
+        "referenced_fields": [
+          "id"
+        ],
+        "cascade": true
+      },
+      {
+        "referencing_fields": [
+          "demand_id"
+        ],
+        "referenced_entity": {
+          "name": "demand"
+        },
+        "referenced_fields": [
+          "id"
+        ],
+        "cascade": true
+      }
+    ]
+  },
+  "task": {
+    "id": "693da3b5f4f812933c645a88",
+    "root": "693c2aa501d82a4f259f4ab4",
+    "project": "693c2aa501d82a4f259f4ab3",
+    "user": "48d1f350-6001-709d-e3d6-b657be67d202"
+  },
+  "namespace": {
+    "id": "01987547fc6c72ecb453bd2736bd4ea0",
+    "tenant": 2,
+    "name": "global-1",
+    "default": true
+  },
+  "revision": 1
+}
